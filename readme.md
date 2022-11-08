@@ -13,7 +13,8 @@ Actualmente el sistema permite crear 5 tipos de producto:
 4. *Ticket VIP al concierto de Pick Floid*
 5. *Café Altocusco*
 
-solo requerirá instanciar la clase VillaPeruana y pasar los valores al constructor asi:
+solo requerirá instanciar la clase *VillaPeruana* y pasar los valores al constructor asi:
+
     `GildedRose::of('Café Altocusco', 10, 10);`
 
 #### COMO AÑADIR UN NUEVO TIPO DE PRODUCTO
@@ -21,13 +22,13 @@ solo requerirá instanciar la clase VillaPeruana y pasar los valores al construc
 1. Podrá crear una nueva *CLASE* y extenderla de la clase App\ProductClasses\Product
 2. implemente los dos métodos de arranque:
 
-    `public static function of($name, $quality, $sellIn) {            
+    public static function of($name, $quality, $sellIn) {            
         return new static($name, $quality, $sellIn);
     }
 
     public function __construct($name, $quality, $sellIn){            
         parent::__construct($name, $quality, $sellIn);                  
-    }`
+    }
 
 3. (OPCIONAL): Si su producto no se encuentra dentro del listado especificado anteriormente, puede sobreescribir la propiedad Array publica *$types*:
     public $types = ["Café Altocusco"];
@@ -45,6 +46,21 @@ si desea modificar el nombre de dicho directorio, deberá configurarlo en el arc
 ## DEUDA TÉCNICA
 el ejercicio se desarrollo a partir de la práctica **TDD**, sin embargo, en el caso del producto *"Tumi"* merciona que el quality es 80 y no debe cambiar; en la prueba unitaria trabaja con valores variables que devuelven el mismo valor y por tanto se trabajo de la misma manera. Una diferencia similar se presenta en el producto *Pisco Peruano*, en el ejercicio menciona que su valor se duplica y triplica respectivamente cuando faltan 10 y 5 días para que el SellIn llegue a cero, al igual que los tickers. Sin embargo, para que la prueba unitaria sea exitosa es necesario darle otro tratamiento.
 
+
+#RESPUESTAS DE CONOCIMIENTO LARAVEL FRAMEWORK
+
+1. Qué paquete o estrategia utilizarías para levantar un sistema de administración rápidamente? (Autenticación y CRUDs)
+R\: En las ultimas versiones de Laravel es una excelente opción *Laravel Jetstream* que nos brinda un sistema de base bastante robusto con miras al desarrollo rápido. *Laravel Breeze* en menor medida pero también nos ofrece un buen punto de partida.
+
+2. Una breve explicación de cómo laravel utiliza la injección de dependencias
+R\: Con tal de hacer mucho mas eficientes y mantenibles nuestra aplicaciones, surge la necesidad de crear componentes lo más desacoplados posibles, de tal manera que un cambio, no nos rompa toda la aplicación. Es gracias a la *Inyección de dependencias* que logramos gran parte de este objetivo, *bajo acoplamiento y buena cohesión*. Laravel implementa su *Service Container* justamente para  ayudarnos a *inyectar* bajo distas modalidades, componentes a través de los constructores o los métodos de nuestra aplicación.
+
+3. En qué casos utilizarías un Query Scope?
+R\: Un caso puntual en donde uso bastante los query Scopes, es al momento de realizar busquedas a trávés de formularios vía método GET: sencillamente valido si enla url existe el parametro, ejecuto ese *Query scope* para que busque en un campo o campos especificos en ciertos. Es decir, puedo enviar varios campos a buscar a través de la url, pero la consulta solo me arrojará resultados para los campos que no estan vacíos. Si todos los parámetros de la url estan vacios, la consulta me devolverá todos los resultados. $builder->ofName->ofID->paginate(). los uso de manera global, o local, dependiendo el caso.
+
+4. Qué convenciones utilizas en la creación e implementación de migraciones?
+R\: Las organizo en directorios según el objetivo que tenga el lote de migraciones (Posts, Categories, etc), Nombres de tablas en prural y en ingles, implemento los softDeletes y timestamps para tener control de cambios en los casos en que sea necesario
+las pruebo con los Seeders y los factories. marco como indexables, de manera estratégica, los campos que pueden ser potencialmente buscados manteniendo equilibrio entre rendimiento y espacio de almacenamiento.
 
 
 # Talently Challenge
