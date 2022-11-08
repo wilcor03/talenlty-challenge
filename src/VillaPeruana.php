@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Providers\ProductProvider;
+use App\Interfaces\Product as ProductI;
 
 class VillaPeruana
 {    
@@ -17,7 +18,7 @@ class VillaPeruana
         return new static($name, $quality, $sellIn, $productProvider);
     }
     
-    public function __construct(string $name, int $quality, int $sellIn, $productProvider){             
+    public function __construct(string $name, int $quality, int $sellIn, ProductI $productProvider){             
         $this->productProvider  = $productProvider;
         $this->name             = $name;
         $this->quality          = $quality;
